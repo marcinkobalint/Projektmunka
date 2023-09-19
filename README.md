@@ -1,1 +1,2 @@
-# Projektmunka
+Projektmunka feladatunk
+Széchenyi tanárkereső
