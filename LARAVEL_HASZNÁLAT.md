@@ -33,5 +33,6 @@ A kód teljes működtetésére szükség lesz a Composer (terminal utasítások
 # PROGRAM MŰKÖDÉSE
 Egyelőre még nincs se adatbázis kidolgozva, illetve a Bejelentkezés funkció sem csinál semmit, ezért migrationra még nincs szükség.
 A szerver LOKÁLIS futtatásához be kell írni a terminalba a 'php artisan serve' utasítást, majd a terminálon keresztül megnyitni az oldalt.
+A bejelentkezés oldalát a '/bejelentkezes' oldalon megtalálod!
 
 Később, ha már használjuk az SQL rendszerünket, ne felejtsétek átírni az '.env.example' fájlt '.env' fájlra ha az nem létezik!!
