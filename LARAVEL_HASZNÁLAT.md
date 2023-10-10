@@ -1,6 +1,10 @@
 Egy oldal működtetéséhez több különböző fájlban is kell írni kódot!
 
-A kód teljes működtetésére szükség lesz a Composer (terminal utasítások) és a XAMPP (MySQL elérés) letöltésére!
+# FONTOS!
+- A kód teljes működtetésére szükség lesz a Composer (terminal utasítások) [és localhost esetében XAMPP (MySQL elérés)] letöltésére!
+- Ha elindul a szerver de pl. azt írja ki, hogy 500 | Server Error, akkor hiányzik a .env fájl!
+   - A Laravel automatikusan létrehoz egy .env.example fájlt, de azt át kell írni .env fájlra! (Ha kéri akkor hozz létre kulcsot is!)
+- A szerver LOKÁLIS futtatásához be kell írni a terminalba a 'php artisan serve' utasítást, majd a terminálon keresztül megnyitni az oldalt.
 
 # FÁJLOK
 ## routes/web.php
@@ -15,6 +19,7 @@ A kód teljes működtetésére szükség lesz a Composer (terminal utasítások
 - Ha a JS vagy CSS részt máshol akarod tárolni, azt a public mappán belül tudod megtenni.
 
 ## database/migrations
+Mint kiderült, a mi esetünkben erre nem lesz szükség mert nem a beépített MySQL-lel fogunk dolgozni, de azért itt hagyom erről az információt, hátha szükség lesz rá!
 - Itt található a Laravel által alapértelmezetten elkészített SQL táblák.
 - A mi esetünkben a create users table könnyen felhasználható a bejelentkezés / regisztrációs felületre, bár érdemes kicsit átalakítani.
 - Ha le van töltve a Composer és a XAMPP, 'akkor a php artisan migrate' utasítással fel tudjuk vinni a táblákat a MySQL szerverünkre.
@@ -29,10 +34,3 @@ A kód teljes működtetésére szükség lesz a Composer (terminal utasítások
 ## app/Http/Controllers
 - Itt lehet létrehozni Controllereket a különböző függvények és Blade-ek működésére (pl. BejelentkezesController.php).
 - Személy szerint én itt mentem el a felhasználó általá adott adatokat, illetve itt ellenőrzöm a helyességüket is.
-
-# PROGRAM MŰKÖDÉSE
-Egyelőre még nincs se adatbázis kidolgozva, illetve a Bejelentkezés funkció sem csinál semmit, ezért migrationra még nincs szükség.
-A szerver LOKÁLIS futtatásához be kell írni a terminalba a 'php artisan serve' utasítást, majd a terminálon keresztül megnyitni az oldalt.
-A bejelentkezés oldalát a '/bejelentkezes' oldalon megtalálod!
-
-Később, ha már használjuk az SQL rendszerünket, ne felejtsétek átírni az '.env.example' fájlt '.env' fájlra ha az nem létezik!!
