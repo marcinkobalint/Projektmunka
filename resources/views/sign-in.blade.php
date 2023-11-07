@@ -15,16 +15,31 @@
 <body>
 	<i class="bi bi-mortarboard-fill"></i>
 	<h2>Széchenyi Tanár Kereső</h2>
+   <div class="container">
+      @if ($errors->any())
+      <div class="col-12">
+         @foreach($errors->all() as $error)
+         <div class="alert alert-danger">{{$error}}</div>
+         @endforeach
+      </div>
+      @endif
+      @if (session()->has('error')) 
+      <div class="alert alert-danger">{{session('error')}}</div>
+      @endif
+      @if (session()->has('success')) 
+      <div class="alert alert-success">{{session('success')}}</div>
+      @endif
+   </div>
 	<div class="txt-field">
 		<i class="bi bi-book-half"></i>
 		<h5>Jelentkezz be!</h5>
-		<form>
+		<form action="{{route('sign-in.post')}}" method="POST">
          @csrf
 			<p>Felhasználónév:</p>
-			<input type="text" name="" placeholder="Add meg a felhasználóneved!" required>
+			<input type="text" name="name" placeholder="Add meg a felhasználóneved!" required>
 			<p>Jelszó:</p>
-			<input type="password" name="signinname" placeholder="Add meg a jelszavad!" required>
-			<input type="submit" name="password" value="Bejelentkezés"><br>
+			<input type="password" name="password" placeholder="Add meg a jelszavad!" required>
+			<input type="submit" value="Bejelentkezés"><br>
 			<a href="{{ route('forgot-psw') }}">Elfelejtetted a jelszavad?</a><br>
 			<a href="{{ route('sign-up') }}">Nincs accountod? Regisztrálj itt!</a><br>
 		</form>
