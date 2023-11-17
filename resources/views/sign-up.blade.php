@@ -17,22 +17,7 @@
 	<body>
 		<i class="bi bi-mortarboard-fill"></i>
 		<h2>Széchenyi Tanár Kereső</h2>
-		<div class="container">
-			@if ($errors->any())
-				<div class="col-12">
-					@foreach ($errors->all() as $error)
-						<div class="alert alert-danger">{{ $error }}</div>
-					@endforeach
-				</div>
-			@endif
-			@if (session()->has('error'))
-				<div class="alert alert-danger">{{ session('error') }}</div>
-			@endif
-			@if (session()->has('success'))
-				<div class="alert alert-success">{{ session('success') }}</div>
-			@endif
-		</div>
-		<form action="{{ route('sign-up.post') }}" method="POST">
+				<form action="{{ route('sign-up.post') }}" method="POST">
 			<div class="txt-field">
 				<h5>Regisztrációs adatlap</h5>
 				@csrf
@@ -45,7 +30,22 @@
 				{{-- <button type="submit" class="btn btn-secondary">Regisztrálás</button> --}}
 				<input type="submit" name="" value="Regisztrálás"><br>
 				<i class="bi bi-emoji-grin-fill"></i>
-				<a href="{{ route('sign-in') }}">Be szeretnék jelentkezni!</a><br>
+				<a href="{{ route('sign-in') }}">Be szeretnék jelentkezni!</a>
+            <div class="mt-3 container">
+               @if ($errors->any())
+                  <div class="col-12">
+                     @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">{{ $error }}</div>
+                     @endforeach
+                  </div>
+               @endif
+               @if (session()->has('error'))
+                  <div class="alert alert-danger">{{ session('error') }}</div>
+               @endif
+               @if (session()->has('success'))
+                  <div class="alert alert-success">{{ session('success') }}</div>
+               @endif
+            </div>
 		</form>
 		</div>
 	</body>
