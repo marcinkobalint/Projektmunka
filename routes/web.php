@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ Route::get('/', function () {
    return redirect('/sign-in');
 });
 
-Route::get('/welcome', [UserController::class, 'welcome'])->name('welcome');
+Route::get('/main', [UserController::class, 'main'])->name('main-screen');
 
 // bejelentkezés weblap elérése
 Route::get('/sign-in', [UserController::class, 'sign_in'])->name('sign-in');

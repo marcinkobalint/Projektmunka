@@ -8,16 +8,24 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
+use App\Models\Teacher;
+use App\Models\Subject;
+use App\Models\Teacher_Subject;
 
 class UserController extends Controller
 {
-   function welcome()
+   // Main screen get
+   function main()
    {
       if (Auth::check()) {
-         return view('welcome');
+         $teachers = Teacher::all();
+         $subjects = Subject::all();
+         $teachers_subjects = Teacher_Subject::all();
+         return view('main-screen', compact('teachers', 'subjects', 'teachers_subjects'));
       }
       return redirect(route('sign-in'));
    }
+
    // Sign-in get
    function sign_in()
    {
@@ -48,13 +56,13 @@ class UserController extends Controller
    function sign_in_post(Request $request)
    {
       $request->validate([
-         'name' => 'required',
+         'neptun' => 'required',
          'password' => 'required',
       ]);
 
-      $credentials = $request->only('name', 'password');
+      $credentials = $request->only('neptun', 'password');
       if (Auth::attempt($credentials)) {
-         return redirect()->intended(route('welcome'));
+         return redirect()->intended(route('main-screen'));
       }
       return redirect(route('sign-in'))->with("error", "Nem sikerült bejelentkezni.");
    }
@@ -63,15 +71,14 @@ class UserController extends Controller
    function sign_up_post(Request $request)
    {
       $request->validate([
-         'username' => 'required|unique:users,name',
-         'password' => 'required',
          'email' => 'required|unique:users',
-         // 'neptun' => // HOZZÁADNI USERS-HEZ
+         'neptun' => 'required|unique:users',
+         'password' => 'required',
       ]);
-      $data['name'] = $request->username;
-      $data['password'] = Hash::make($request->password);
+
+      $data['neptun'] = $request->neptun;
       $data['email'] = $request->email;
-      // $data['neptun'] = $request->name;
+      $data['password'] = Hash::make($request->password);
 
       $user = User::create($data);
       if (!$user) {

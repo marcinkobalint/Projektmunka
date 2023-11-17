@@ -36,14 +36,12 @@
 			<div class="txt-field">
 				<h5>Regisztrációs adatlap</h5>
 				@csrf
-				<p>Felhasználónév</p>
-				<input type="text" name="username" placeholder="Add meg a felhasználóneved!" required>
-				<p>Jelszó</p>
-				<input type="password" name="password" placeholder="Add meg a jelszavad!" required>
-				<p>E-mail cím</p>
+            <p>E-mail cím</p>
 				<input type="email" name="email" placeholder="Add meg az e-mail címed!" required>
 				<p>Neptun-kód</p>
 				<input type="text" name="neptun" placeholder="Add meg a neptun-kódod!" required>
+				<p>Jelszó</p>
+				<input type="password" name="password" placeholder="Add meg a jelszavad!" required>
 				{{-- <button type="submit" class="btn btn-secondary">Regisztrálás</button> --}}
 				<input type="submit" name="" value="Regisztrálás"><br>
 				<i class="bi bi-emoji-grin-fill"></i>

@@ -35,8 +35,8 @@
 		<h5>Jelentkezz be!</h5>
 		<form action="{{route('sign-in.post')}}" method="POST">
          @csrf
-			<p>Felhasználónév:</p>
-			<input type="text" name="name" placeholder="Add meg a felhasználóneved!" required>
+         <p>Neptun-kód:</p>
+         <input type="text" name="neptun" placeholder="Add meg a Neptun-kódod!" required>
 			<p>Jelszó:</p>
 			<input type="password" name="password" placeholder="Add meg a jelszavad!" required>
 			<input type="submit" value="Bejelentkezés"><br>
