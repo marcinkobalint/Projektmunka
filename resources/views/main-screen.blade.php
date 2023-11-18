@@ -29,8 +29,9 @@
 		<form action="{{ route('main-screen') }}" method="GET">
 			<!-- Keresősáv -->
 			<div class="container mt-4 custom-search">
-				<input class="form-control" type="search" placeholder="Keresés" aria-label="Search">
-				<button class="btn-search" type="submit">Keresés</button>
+				<input class="form-control" type="search" id="search" placeholder="Keresés" aria-label="Search"
+					oninput="searchInfo()">
+				{{-- <button class="btn-search" type="submit">Keresés</button> --}}
 			</div>
 
 			<table>
@@ -43,9 +44,9 @@
 				</thead>
 				<tbody>
 					@foreach ($teachers as $teacher)
-						<tr>
-							<td>{{ $teacher->name }}</td>
-							<td>
+						<tr class="informations">
+							<td> <p class="teacher_name">{{ $teacher->name }} </p></td>
+							<td class="subject_names">
 								@foreach ($teachers_subjects as $teacher_subject)
 									@if ($teacher->id == $teacher_subject->teacher_id)
 										@foreach ($subjects as $subject)
@@ -56,8 +57,10 @@
 									@endif
 								@endforeach
 							</td>
-							<td>e-mail: {{ $teacher->email }}<br>telefon: {{ $teacher->phone }}<br>Iroda: {{ $teacher->room }}<br>Fogadási
-								idő: csütörtök 16:40-17:40</td>
+							<td>E-mail: {{ $teacher->email }}<br>
+                         Telefon: {{ $teacher->phone }}<br>
+                         Iroda: {{ $teacher->room }}<br>
+                         Fogadási idő: csütörtök 16:40-17:40</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -65,6 +68,24 @@
 		</form>
 
 		</div>
+
+		<script>
+			function searchInfo() {
+				let s = document.getElementById('search').value.toLowerCase();
+				const informations = document.getElementsByClassName('informations');
+				for (let i = 0; i < informations.length; i++) {
+               let show = false;
+               let teacher_name = informations[i].querySelectorAll('.teacher_name')[0].textContent;
+               let subject_names = informations[i].querySelectorAll('.subject_names');
+               for (let i = 0; i < subject_names.length; i++) {
+                  if (teacher_name.toLowerCase().includes(s) || subject_names[i].textContent.toLowerCase().includes(s)) show = true;
+                  if (show) break;
+               }
+               if (show) informations[i].style.display = '';
+               else informations[i].style.display = 'none';
+				}
+			}
+		</script>
 
 
 
@@ -77,5 +98,7 @@
 	</body>
 
 	</html>
+
+
 
 @endsection
