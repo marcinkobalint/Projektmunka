@@ -1,0 +1,64 @@
+body{
+    background-color: rgb(4, 0, 52);
+}
+
+.txt-field{
+    height: 350px;
+    width: 280px;
+    background-color: white;
+    position: absolute;
+    top: 15%;
+    left: 40%;
+    background-color: rgb(4, 0, 52);
+    color: white;
+}
+
+.txt-field h4{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.txt-field p{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.txt-field a{
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 20px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.txt-field a:hover{
+    cursor: pointer;
+    color: blue;
+}
+
+.bi-book-half {
+    font-size: 100px;
+    position: relative;
+    top: -10px;
+    left: calc(50% - 50px);
+}
+
+h2{
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bi-mortarboard-fill{
+    color: blue;
+    font-size: 100px;
+    position: relative;
+    top: -10px;
+    left: calc(6% - 10px);
+}
