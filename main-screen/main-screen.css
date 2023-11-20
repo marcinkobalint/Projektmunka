@@ -1,0 +1,77 @@
+/*tanár táblázat*/
+table {
+    width: 80%;
+    position: absolute;
+    right: 5%;
+    top: 120px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: white;
+}
+
+th {
+    background-color: blue;
+    color: white;
+}
+  
+/* A sidebar style-ja*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0;
+    background-color: black;
+}
+.sidebar a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: white;
+}
+.sidebar a:hover {
+    background-color: blue;
+}
+.content {
+    margin-left: 250px; 
+    padding: 20px;
+}
+
+/*háttérszín*/
+body {
+    background-color: rgb(4, 0, 52);
+}
+   
+/*keresősáv*/
+.custom-search {
+    max-width: 500px; 
+    margin: 0 auto;
+}
+
+/*gomb*/
+.btn-search{
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    right: 23.5%;
+    top: 18px;
+}
+
+.btn-search:hover{
+    background-color: blue;
+}
+
+.bi-book-half{
+    color: blue;
+    position: absolute;
+    top: 10px;
+    left: 20%;
+    font-size: 28px;
+}
