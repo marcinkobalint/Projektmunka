@@ -18,12 +18,14 @@ body{
     padding: 0 0 20px;
     text-align: center;
     font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .txt-field p{
     margin: 0;
     padding: 0;
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .txt-field input{
@@ -62,6 +64,7 @@ body{
     font-size: 17px;
     line-height: 20px;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .txt-field a:hover{
@@ -80,6 +83,7 @@ h2{
     color: white;
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .bi-mortarboard-fill{
