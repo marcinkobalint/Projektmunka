@@ -10,11 +10,13 @@ th, td {
     padding: 8px;
     text-align: left;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 th {
     background-color: blue;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
   
 /* A sidebar style-ja*/
