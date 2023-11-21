@@ -1,0 +1,100 @@
+body{
+    background-color: rgb(4, 0, 52);
+}
+
+.text-field h5{
+    color: white;
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.bi-emoji-tear-fill{
+    color: white;
+    position: relative;
+    font-size: 22px;
+    top: -42px;
+    left: calc(98% - 10px);
+}
+
+h2{
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.bi-mortarboard-fill{
+    color: blue;
+    font-size: 100px;
+    position: relative;
+    top: -10px;
+    left: calc(6% - 10px);
+}
+
+.txt-field{
+    height: 350px;
+    width: 280px;
+    background-color: white;
+    position: absolute;
+    top: 15%;
+    left: 40%;
+    background-color: rgb(4, 0, 52);
+    color: white;
+}
+
+.txt-field h5{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.txt-field p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.txt-field input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.txt-field input[type="text"], input[type="email"], input[type="password"]{
+    border: none;
+    border-bottom: 1px solid blue;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: white;
+    font-size: 16px;
+}
+
+.txt-field input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: white;
+    color: rgb(4, 0, 52);
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.txt-field input[type="submit"]:hover{
+    cursor: pointer;
+    background: blue;
+    color: white;
+}
+
+.txt-field a{
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 20px;
+    color: white;
+}
+
+.txt-field a:hover{
+    cursor: pointer;
+    color: blue;
+}
