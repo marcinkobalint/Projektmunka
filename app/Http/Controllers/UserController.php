@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 
 use App\Models\User;
@@ -26,6 +27,15 @@ class UserController extends Controller
          $subjects = Subject::all();
          $teachers_subjects = Teacher_Subject::all();
          return view('main-screen', compact('teachers', 'subjects', 'teachers_subjects'));
+      }
+      return redirect(route('sign-in'));
+   }
+
+   // About us get
+   function about_us()
+   {
+      if (Auth::check()) {
+         return view('about-us');
       }
       return redirect(route('sign-in'));
    }
@@ -51,12 +61,47 @@ class UserController extends Controller
    // Forgot-psw post
    function forgot_psw_post(Request $request)
    {
-      $request->validate([
-         'neptun' => 'required|exists:users',
-         'email' => 'required|email|exists:users',
+      // Mezők validálása
+      $validator = Validator::make($request->all(), [
+         'neptun' => 'required',          // |exists:users',
+         'email' => 'required|email:rfc,dns',     // |exists:users',
+      ], [
+         'neptun.required' => 'A Neptun mező nem maradhat üresen.',
+         // 'neptun.exists' => 'Nem létezik felhasználó ezzel a Neptun kóddal.',
+         'email.required' => 'Az Email mező nem maradhat üresen.',
+         'email.email' => 'A megadott Email cím érvénytelen.',
+         // 'email.exists' => 'Nem létezik felhasználó ezzel az Email címmel.',
       ]);
 
+      if ($validator->fails()) {
+         return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+      }
+
+      // Létezik-e a neptun - email pár
+      $userExists = DB::table('users')->where([
+         'neptun' => $request->neptun,
+         'email' => $request->email
+      ])->first();
+
+      if (!$userExists) {
+         return redirect(route('forgot-psw'))->with("error", "A Neptun kód vagy Email cím helytelen.");
+      }
+
       $token = Str::random(64); //64 hosszú random token
+
+      // Ha már létezik ilyen sor ezzel az email-lel
+      $existingRow = DB::table('password_reset_tokens')
+         ->where('email', $request->email)
+         ->first();
+
+      // A létező sor törlése
+      if ($existingRow) {
+         DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->delete();
+      }
 
       DB::table('password_reset_tokens')->insert([
          'email' => $request->email,
@@ -64,13 +109,12 @@ class UserController extends Controller
          'created_at' => Carbon::now()
       ]);
 
-      Mail::send('emails.forgot-password', ['token' => $token], function($message) use ($request){
+      Mail::send('emails.forgot-password', ['token' => $token], function ($message) use ($request) {
          $message->to($request->email);
          $message->subject("Reset Password");
       });
 
       return redirect()->to(route('forgot-psw'))->with("success", "E-mail elküldve a megadott címre a jelszó módosításához.");
-
    }
 
    // Reset-psw
@@ -82,19 +126,45 @@ class UserController extends Controller
    // Reset-psw post
    function reset_psw_post(Request $request)
    {
-      $request->validate([
-         'email' => 'required|email|exists:users',
-         'password' =>'required|confirmed',
-         'password_confirmation' =>'required'
+      // Mezők validálása
+      $validator = Validator::make($request->all(), [
+         'email' => 'required|email:rfc,dns',           // |exists:users',
+         'password' => 'required|confirmed|string|min:6',
+         'password_confirmation' => 'required'
+      ], [
+         'email.required' => 'Az Email mező nem maradhat üresen.',
+         'email.email' => 'A megadott Email cím érvénytelen.',
+         // 'email.exists' => 'Nem létezik felhasználó ezzel az Email címmel.',
+         'password.required' => 'A Jelszó mező nem maradhat üresen.',
+         'password.confirmed' => 'A két megadott jelszónak egyeznie kell.',
+         'password.string' => 'A jelszónak szövegnek kell lennie.',
+         'password.min' => 'A jelszónak legalább 6 karakterből kell állnia.',
+         'password_confirmation.required' => 'A Jelszó megerősítése mező nem maradhat üresen.',
       ]);
 
-      $updatePassword = DB::table('password_reset_tokens')->where([
-         'email' =>$request->email,
-         'token' =>$request->token
+      if ($validator->fails()) {
+         return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+      }
+
+      // Ha nem létezik a token = link lejárt
+      $tokenExists = DB::table('password_reset_tokens')->where([
+         'token' => $request->token
       ])->first();
 
-      if (!$updatePassword){
-         return redirect()->to(route('reset-psw'))->with("error", "Érvénytelen.");
+      if (!$tokenExists) {
+         return redirect()->to(route('reset-psw', ['token' => $request->token]))->with("error", "A link már lejárt.");
+      }
+
+      // Ha nem találja ezt az email - token párosítást
+      $updatePassword = DB::table('password_reset_tokens')->where([
+         'email' => $request->email,
+         'token' => $request->token
+      ])->first();
+
+      if (!$updatePassword) {
+         return redirect()->to(route('reset-psw', ['token' => $request->token]))->with("error", "Érvénytelen.");
       }
 
       User::where('email', $request->email)->update(["password" => Hash::make($request->password)]);
@@ -115,10 +185,20 @@ class UserController extends Controller
    // Sign-in post
    function sign_in_post(Request $request)
    {
-      $request->validate([
+      // Mezők validálása
+      $validator = Validator::make($request->all(), [
          'neptun' => 'required',
          'password' => 'required',
+      ], [
+         'neptun.required' => 'A Neptun mező nem maradhat üresen.',
+         'password.required' => 'A Jelszó mező nem maradhat üresen.',
       ]);
+
+      if ($validator->fails()) {
+         return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+      }
 
       $credentials = $request->only('neptun', 'password');
       if (Auth::attempt($credentials)) {
@@ -130,11 +210,27 @@ class UserController extends Controller
    // Sign-up post
    function sign_up_post(Request $request)
    {
-      $request->validate([
-         'email' => 'required|unique:users',
+      // Mezők validálása
+      $validator = Validator::make($request->all(), [
+         'email' => 'required|email:rfc,dns|unique:users',
          'neptun' => 'required|unique:users',
          'password' => 'required|string|min:6',
+      ], [
+         'email.required' => 'Az Email mező nem maradhat üresen.',
+         'email.email' => 'A megadott Email cím érvénytelen.',
+         'email.unique' => 'Már létezik felhasználó ezzel az Email címmel.',
+         'neptun.required' => 'A Neptun mező nem maradhat üresen.',
+         'neptun.unique' => 'Már létezik felhasználó ezzel a Neptun kóddal.',
+         'password.required' => 'A Jelszó mező nem maradhat üresen.',
+         'password.string' => 'A jelszónak szövegnek kell lennie.',
+         'password.min' => 'A jelszónak legalább 6 karakterből kell állnia.',
       ]);
+
+      if ($validator->fails()) {
+         return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+      }
 
       $data['neptun'] = $request->neptun;
       $data['email'] = $request->email;

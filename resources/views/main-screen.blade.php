@@ -8,6 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Tanárok</title>
 		<!-- Bootstrap CSS -->
 		{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
 		<!--Bootstrap icon href-->
@@ -20,7 +21,7 @@
 		<!-- Sidebar -->
 		<div class="container-fluid">
 			<div class="col-1.2 sidebar">
-				<a href="#">Rólunk</a>
+				<a href="{{ route('about-us') }}">Rólunk</a>
 				<a href="{{ route('sign-out') }}">Kijelentkezés</a>
 				<i class="bi bi-book-half"></i>
 			</div>
@@ -45,7 +46,9 @@
 				<tbody>
 					@foreach ($teachers as $teacher)
 						<tr class="informations">
-							<td> <p class="teacher_name">{{ $teacher->name }} </p></td>
+							<td>
+								<p class="teacher_name">{{ $teacher->name }} </p>
+							</td>
 							<td class="subject_names">
 								@foreach ($teachers_subjects as $teacher_subject)
 									@if ($teacher->id == $teacher_subject->teacher_id)
@@ -58,9 +61,9 @@
 								@endforeach
 							</td>
 							<td>E-mail: {{ $teacher->email }}<br>
-                         Telefon: {{ $teacher->phone }}<br>
-                         Iroda: {{ $teacher->room }}<br>
-                         Fogadási idő: csütörtök 16:40-17:40</td>
+								Telefon: {{ $teacher->phone }}<br>
+								Iroda: {{ $teacher->room }}<br>
+								Fogadási idő: csütörtök 16:40-17:40</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -74,15 +77,16 @@
 				let s = document.getElementById('search').value.toLowerCase();
 				const informations = document.getElementsByClassName('informations');
 				for (let i = 0; i < informations.length; i++) {
-               let show = false;
-               let teacher_name = informations[i].querySelectorAll('.teacher_name')[0].textContent;
-               let subject_names = informations[i].querySelectorAll('.subject_names');
-               for (let i = 0; i < subject_names.length; i++) {
-                  if (teacher_name.toLowerCase().includes(s) || subject_names[i].textContent.toLowerCase().includes(s)) show = true;
-                  if (show) break;
-               }
-               if (show) informations[i].style.display = '';
-               else informations[i].style.display = 'none';
+					let show = false;
+					let teacher_name = informations[i].querySelectorAll('.teacher_name')[0].textContent;
+					let subject_names = informations[i].querySelectorAll('.subject_names');
+					for (let i = 0; i < subject_names.length; i++) {
+						if (teacher_name.toLowerCase().includes(s) || subject_names[i].textContent.toLowerCase().includes(s))
+							show = true;
+						if (show) break;
+					}
+					if (show) informations[i].style.display = '';
+					else informations[i].style.display = 'none';
 				}
 			}
 		</script>

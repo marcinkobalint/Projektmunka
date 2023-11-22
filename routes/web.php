@@ -19,8 +19,6 @@ Route::get('/', function () {
    return redirect('/sign-in');
 });
 
-Route::get('/main', [UserController::class, 'main'])->name('main-screen');
-
 // bejelentkezés weblap elérése
 Route::get('/sign-in', [UserController::class, 'sign_in'])->name('sign-in');
 Route::post('/sign-in', [UserController::class, 'sign_in_post'])->name('sign-in.post');
@@ -37,7 +35,13 @@ Route::post('/forgot-psw', [UserController::class, 'forgot_psw_post'])->name('fo
 Route::get('/reset-psw/{token}', [UserController::class, 'reset_psw'])->name('reset-psw');
 Route::post('/reset-psw', [UserController::class, 'reset_psw_post'])->name('reset-psw.post');
 
+// tanárok weblap
+Route::get('/main', [UserController::class, 'main'])->name('main-screen');
+// rólunk weblap
+Route::get('/about-us', [UserController::class, 'about_us'])->name('about-us');
+
 Route::get('/sign-out', [UserController::class, 'sign_out'])->name('sign-out');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
