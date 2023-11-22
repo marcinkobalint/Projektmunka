@@ -17,5 +17,6 @@ class Teacher extends Model
       'room',
       'phone',
       'webpage',
+      'consultation'
   ];
 }

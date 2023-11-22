@@ -91,7 +91,7 @@ class UserController extends Controller
 
       $token = Str::random(64); //64 hosszú random token
 
-      // Ha már létezik ilyen sor ezzel az email-lel
+      // Ha már az email kapott korábban tokent
       $existingRow = DB::table('password_reset_tokens')
          ->where('email', $request->email)
          ->first();

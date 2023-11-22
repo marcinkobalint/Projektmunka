@@ -65,7 +65,7 @@ h2{
     margin-bottom: 20px;
 }
 
-.txt-field input[type="text"], input[type="email"]{
+.txt-field input[type="text"], input[type="email"], input[type="password"]{
     border: none;
     border-bottom: 1px solid blue;
     background: transparent;

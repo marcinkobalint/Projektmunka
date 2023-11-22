@@ -60,10 +60,23 @@
 									@endif
 								@endforeach
 							</td>
-							<td>E-mail: {{ $teacher->email }}<br>
-								Telefon: {{ $teacher->phone }}<br>
-								Iroda: {{ $teacher->room }}<br>
-								Fogadási idő: csütörtök 16:40-17:40</td>
+							<td>
+								@if (!empty($teacher->email))
+									E-mail: {{ $teacher->email }}<br>
+								@endif
+								@if (!empty($teacher->phone))
+									Telefon: {{ $teacher->phone }}<br>
+								@endif
+								@if (!empty($teacher->room))
+									Iroda: {{ $teacher->room }}<br>
+								@endif
+								@if (!empty($teacher->webpage))
+									Weboldal: {{ $teacher->webpage }}<br>
+								@endif
+								@if (!empty($teacher->consultation))
+									Fogadási idő: {{ $teacher->consultation }}<br>
+								@endif
+							</td>
 						</tr>
 					@endforeach
 				</tbody>
